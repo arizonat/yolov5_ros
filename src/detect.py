@@ -167,8 +167,11 @@ class Yolov5Detector:
             im0 = annotator.result()
 
         # Publish prediction
-        self.pred_pub.publish(bounding_boxes)
+        image_seq = data.header.seq
+        bounding_boxes.image_seq = image_seq
 
+        self.pred_pub.publish(bounding_boxes)
+        
         # Publish & visualize images
         if self.view_image:
             cv2.imshow(str(0), im0)
